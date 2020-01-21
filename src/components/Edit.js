@@ -2,11 +2,13 @@ import React from 'react';
 import axios from "axios";
 
 import {Helmet} from "react-helmet";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
-class Add extends React.Component {
+class Edit extends React.Component {
   constructor(props){
     super(props);
     this.state = {
+      movie : [],
       title : "title",
       description : "desciption",
       director : "director",
@@ -31,7 +33,7 @@ class Add extends React.Component {
       this.state.ratingValue,
     );
 
-    axios.post("http://3.120.96.16:3001/movies" ,
+    axios.put("http://3.120.96.16:3001/movies/" + this.props.match.params.id,
     {
       title : this.state.titleValue,
       description : this.state.descValue,
@@ -41,9 +43,8 @@ class Add extends React.Component {
     .then((response) =>{
       console.log(response);
       this.goBack();
-    })
-    .catch((error) =>{
-      alert("SOMETHING WENT WRONG")
+    }).catch(() =>{
+      alert("SOMETHING WENT TERRIBLE WRONG LMAO")
     })
 
     this.setState({
@@ -66,34 +67,54 @@ class Add extends React.Component {
     console.log(e.target.name + " : " + value);
   }
 
+  componentDidMount(){
+    (axios.get("http://3.120.96.16:3001/movies/" + this.props.match.params.id)
+      .then((response) =>{
+        console.log(response);
+        this.setState({
+          movie : response.data,
+        });
+        this.setState({
+          titleValue : this.state.movie.title,
+          descValue : this.state.movie.description,
+          dirValue : this.state.movie.director,
+          ratingValue : this.state.movie.rating,
+        })
+      })
+      .catch((error) =>{
+        alert("SOMETHING WENT TERRIBLE WRONG LMAO")
+      })
+    )
+  }
+
   render(){
     return (
       <div className="overall">
-        <h1>Add A New Movie</h1>
         <Helmet>
-          <title>Matti - Add</title>
+          <title>Matti - Edit</title>
         </Helmet>
+        <h1>Edit Movie</h1>
         <form onSubmit={this.onSubmit}>
           Title
           <input 
             name="titleValue" 
             value={this.state.titleValue} 
             onChange={this.onChangeHandeler} 
-            placeholder="title"
+            placeholder={this.state.movie.title}
           />
           Description
           <textarea
             name="descValue" 
             value={this.state.descValue} 
             onChange={this.onChangeHandeler} 
-            placeholder="description"
+            placeholder={this.state.movie.description}
           />
           Director
           <input 
             name="dirValue" 
             value={this.state.dirValue} 
             onChange={this.onChangeHandeler} 
-            placeholder="director"
+            placeholder={this.state.movie.director}
           />
           Rating
           <input 
@@ -102,12 +123,13 @@ class Add extends React.Component {
             name="ratingValue" 
             value={this.state.ratingValue} 
             onChange={this.onChangeHandeler} 
-            placeholder="rating"
+            placeholder={this.state.movie.rating}
           />
-          <button className="btn" type="submit">Add Movie</button>
+          <button className="btn" type="submit">Change Movie</button>
         </form>
       </div>
     );
   }
 }
-export default Add;
+
+export default Edit;

@@ -1,35 +1,31 @@
 import React from 'react';
 import Main from "./components/Main";
 import Add from "./components/Add";
+import Details from "./components/Details";
+import Edit from "./components/Edit";
 import './App.css';
+import {Helmet} from "react-helmet";
+
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 class App extends React.Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      home : "Add",
-      page : <Main />,
-    }
-    this.onClick = this.onClick.bind(this);
-  }
 
-  onClick(e){
-    if(this.state.home === "Home"){
-      this.setState({home : "Add"});
-      this.setState({page : <Main />});;
-      return;
-    }else{
-      this.setState({home : "Home"});
-      this.setState({page : <Add />});;
-      return;
-    }
-  }
 
   render(){
     return (
       <div className="App">
-        {this.state.page}
-        <button className="btn" onClick={this.onClick}>{this.state.home}</button>
+        <div>
+          <Router>
+            <div className="header">
+              <Link to="/"><button className="btn">Home</button></Link>
+              <Link to="/Add"><button className="btn">Add</button></Link>
+            </div>
+            <Route exact path="/" component={Main}/>
+            <Route path="/Add" component={Add}/>
+            <Route path="/Details/:id" component={Details}/>
+            <Route path="/Edit/:id" component={Edit}/>
+          </Router>
+        </div>
       </div>
     );
   }

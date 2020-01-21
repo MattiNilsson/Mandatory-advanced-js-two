@@ -2,28 +2,50 @@
   color:white;
 }
 
+.header{
+  width: 100%;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+
 body{
   display:flex;
-  align-items: center;
+  align-items: right;
   justify-content: center;
   background-color: rgb(29, 29, 29);
 }
 
+.validation-none{
+  border: 0px;
+  height: 99%;
+  width: 99.5%
+}
+
+
 button{
   padding:10px;
+  margin-left : 10px;
+  margin-right : 10px;
   background-color: rgb(29, 29, 29);
   border: 0px;
   transition: 0.2s ease-out;
 }
 
+button:hover{
+  text-decoration: underline;
+}
+
 table{
-  border: 3px solid rgb(250, 43, 122);
+  margin-bottom: 30px;
+  margin-top: 20px;
+  border-spacing: 0;
 }
 th{
   margin: 0;
   padding-left: 20px;
   padding-right: 20px;
-  border: 2px solid rgb(161, 161, 161);
+  border-bottom: 2px solid rgb(161, 161, 161);
   color: rgb(161, 161, 161);
   text-align: center;
 }
@@ -31,21 +53,39 @@ td{
   margin: 0;
   padding-left: 20px;
   padding-right: 20px;
-  border: 2px solid rgb(252, 255, 254);
+  border-bottom: 2px solid rgb(252, 255, 254);
   text-align: center;
   transition: 0.2s ease-out;
 }
 
+.side{
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+.side > button {
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+.side > .link > button {
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
 tr:hover > td{
   background-color: rgb(8, 48, 53);
-  border: 2px solid rgb(42, 252, 182);
-  padding-top: 20px;
-  padding-bottom: 20px;
+  border-bottom: 2px solid rgb(42, 252, 182);
 }
 
 tr:hover > td > button{
   background-color: rgb(8, 48, 53);
 }
+
+tr:hover > td > .link > button{
+  background-color: rgb(8, 48, 53);
+}
+
 
 input{
   color:rgb(27, 27, 27);
@@ -78,3 +118,31 @@ input{
   padding-bottom : 5px;
   border: 4px solid white;
 }
+
+.btn:hover{
+  border: 4px solid rgb(42, 252, 182);
+  background-color: rgb(8, 48, 53);
+  border-radius: 20px;
+}
+
+textarea{
+  color:black;
+  margin-top: 2px;
+  height: 100px;
+}
+
+.dHead{
+  margin-bottom: 0px;
+}
+
+.dRating{
+  margin-top: 0px;
+}
+
+.dDesc{
+  margin-top: 0px;
+  color : rgb(42, 252, 182);
+  max-width: 400px;
+  text-align: center;
+}
+
