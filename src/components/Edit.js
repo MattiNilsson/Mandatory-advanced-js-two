@@ -18,6 +18,8 @@ class Edit extends React.Component {
       descValue : "",
       dirValue : "",
       ratingValue : "",
+
+      error : "",
     }
     this.onSubmit = this.onSubmit.bind(this);
     this.onChangeHandeler = this.onChangeHandeler.bind(this);
@@ -43,8 +45,9 @@ class Edit extends React.Component {
     .then((response) =>{
       console.log(response);
       this.goBack();
-    }).catch(() =>{
-      alert("SOMETHING WENT TERRIBLE WRONG LMAO")
+    }).catch((error) =>{
+      console.log(error.response)
+      this.setState({error : error.response.data.details[0].message})
     })
 
     this.setState({
@@ -94,9 +97,11 @@ class Edit extends React.Component {
           <title>Matti - Edit</title>
         </Helmet>
         <h1>Edit Movie</h1>
+        <p className="error" style={{color : "red"}}>{this.state.error}</p>
         <form onSubmit={this.onSubmit}>
           Title
           <input 
+            required
             name="titleValue" 
             value={this.state.titleValue} 
             onChange={this.onChangeHandeler} 
@@ -104,6 +109,7 @@ class Edit extends React.Component {
           />
           Description
           <textarea
+            required
             name="descValue" 
             value={this.state.descValue} 
             onChange={this.onChangeHandeler} 
@@ -111,6 +117,7 @@ class Edit extends React.Component {
           />
           Director
           <input 
+            required
             name="dirValue" 
             value={this.state.dirValue} 
             onChange={this.onChangeHandeler} 
@@ -118,6 +125,7 @@ class Edit extends React.Component {
           />
           Rating
           <input 
+            required
             type="number"
             step="0.1"
             name="ratingValue" 

@@ -72,6 +72,9 @@ td{
   margin-left: 0px;
   margin-right: 0px;
 }
+.error{
+  margin-top:2px;
+}
 
 tr:hover > td{
   background-color: rgb(8, 48, 53);

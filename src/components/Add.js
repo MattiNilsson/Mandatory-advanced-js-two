@@ -2,6 +2,7 @@ import React from 'react';
 import axios from "axios";
 
 import {Helmet} from "react-helmet";
+import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
 
 class Add extends React.Component {
   constructor(props){
@@ -16,10 +17,12 @@ class Add extends React.Component {
       descValue : "",
       dirValue : "",
       ratingValue : "",
+
+      redirect : false,
+      error : "",
     }
     this.onSubmit = this.onSubmit.bind(this);
     this.onChangeHandeler = this.onChangeHandeler.bind(this);
-    this.goBack = this.goBack.bind(this);
   }
 
   onSubmit(e){
@@ -40,10 +43,12 @@ class Add extends React.Component {
     })
     .then((response) =>{
       console.log(response);
-      this.goBack();
+      this.setState({redirect : true});
     })
     .catch((error) =>{
-      alert("SOMETHING WENT WRONG")
+      this.setState({error : error.response.data[0].message})
+      console.log(error.response)
+//      alert(error.response.data[0].message);
     })
 
     this.setState({
@@ -52,10 +57,6 @@ class Add extends React.Component {
       dirValue : "",
       ratingValue : "",
     })
-  }
-
-  goBack(){
-    this.props.history.goBack();
   }
 
   onChangeHandeler(e){
@@ -67,15 +68,21 @@ class Add extends React.Component {
   }
 
   render(){
+    if(this.state.redirect){
+      return (<Redirect to="/"></Redirect>)
+    }
+
     return (
       <div className="overall">
         <h1>Add A New Movie</h1>
         <Helmet>
           <title>Matti - Add</title>
         </Helmet>
+        <p className="error" style={{color : "red"}}>{this.state.error}</p>
         <form onSubmit={this.onSubmit}>
           Title
           <input 
+            required
             name="titleValue" 
             value={this.state.titleValue} 
             onChange={this.onChangeHandeler} 
@@ -83,6 +90,7 @@ class Add extends React.Component {
           />
           Description
           <textarea
+            required
             name="descValue" 
             value={this.state.descValue} 
             onChange={this.onChangeHandeler} 
@@ -90,6 +98,7 @@ class Add extends React.Component {
           />
           Director
           <input 
+            required
             name="dirValue" 
             value={this.state.dirValue} 
             onChange={this.onChangeHandeler} 
@@ -97,6 +106,7 @@ class Add extends React.Component {
           />
           Rating
           <input 
+            required
             type="number"
             step="0.1"
             name="ratingValue" 

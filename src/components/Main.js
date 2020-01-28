@@ -25,7 +25,7 @@ class Main extends React.Component {
         this.setState({movies : response.data});
       })
       .catch(() =>{
-        console.log("SOMETHING WENT WRONG")
+        alert("could not find data for movies")
       })
       )
   }
@@ -78,7 +78,8 @@ class Main extends React.Component {
       })
     }else{
       const result = this.state.movies.filter((movie) => {
-        return movie.title.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1;
+        return movie.title.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 || 
+        movie.director.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1;
       });
       return result.map((item) => {
         return (
@@ -107,6 +108,10 @@ class Main extends React.Component {
   }
   
   render(){
+    if (!this.state.movies) {
+      return <p>Loading...</p>;
+    }
+
     return (
       <div className="overall">
         <Helmet>

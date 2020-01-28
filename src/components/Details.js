@@ -18,7 +18,7 @@ class Details extends React.Component {
         this.setState({movie : response.data});
       })
       .catch((error) =>{
-        alert("SOMETHING WENT TERRIBLE WRONG LMAO")
+        alert("Cannot load details. Movie might have gotten removed.")
       })
     )
   }
