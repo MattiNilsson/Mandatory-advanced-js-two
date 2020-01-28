@@ -46,8 +46,12 @@ class Add extends React.Component {
       this.setState({redirect : true});
     })
     .catch((error) =>{
-      this.setState({error : error.response.data[0].message})
-      console.log(error.response)
+      if(error.response.status === 400){
+        this.setState({error : error.response.data[0].message})
+        console.log(error.response)
+      }else{
+        this.setState({error : "something went wrong!"})
+      }
 //      alert(error.response.data[0].message);
     })
 

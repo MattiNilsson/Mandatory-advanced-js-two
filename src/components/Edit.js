@@ -46,8 +46,12 @@ class Edit extends React.Component {
       console.log(response);
       this.goBack();
     }).catch((error) =>{
-      console.log(error.response)
-      this.setState({error : error.response.data.details[0].message})
+      if(error.response.status === 400){
+        console.log(error.response)
+        this.setState({error : error.response.data.details[0].message})
+      }else{
+        this.setState({error : "something went wrong!"})
+      }
     })
 
     this.setState({
