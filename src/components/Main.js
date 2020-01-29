@@ -2,6 +2,7 @@ import React from 'react';
 import axios from "axios";
 import Details from "./Details";
 import {Helmet} from "react-helmet";
+import {debounce} from "lodash";
 
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
@@ -11,6 +12,7 @@ class Main extends React.Component {
     this.state = {
       movies : [],
       search : "",
+      changeValue : "",
     }
     this.onClick = this.onClick.bind(this);
     this.myGet = this.myGet.bind(this);
@@ -49,8 +51,13 @@ class Main extends React.Component {
   }
 
   onChange(e){
-    this.setState({search : e.target.value})
+    this.setState({changeValue : e.target.value});
+    this.onChangeTimer();
   }
+
+  onChangeTimer = debounce((e) => {
+    this.setState({search : this.state.changeValue})
+  },200)
 
   renderList(){
     if(this.state.search === ""){
@@ -118,7 +125,7 @@ class Main extends React.Component {
           <title>Matti - Home</title>
         </Helmet>
         <h1>Movies</h1>
-        <input placeholder="search by title" onChange={this.onChange} value={this.state.search}/>
+        <input placeholder="search by title" onChange={this.onChange} value={this.state.changeValue}/>
         <table>
           <thead>
             <tr>
